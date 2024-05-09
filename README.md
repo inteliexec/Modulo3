@@ -1,4 +1,6 @@
-# OnlineRegressor
+# Modulo 3
+> This is a fork of https://github.com/takeshimg92/OnlineRegressor, meant for use in the Inteli community.
+
 Streamlit Cloud app for no-code regression and classification tasks.
 This code was developed to be used as a demonstration tool in lectures about data science for managers who do not have a background in analytics.
 
