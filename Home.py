@@ -4,9 +4,9 @@ import os
 
 st.set_page_config(
     page_title="Inteli Exec",
-    page_icon="👋",
+    page_icon=Image.open(os.path.join('assets', 'inteli_logo.png')),
 )
-banner = Image.open(os.path.join('assets', 'inteli_logo.png'))
+banner = Image.open(os.path.join('assets', 'inteli_logo_exec.png'))
 st.image(banner)
 
 st.write("# Inteli Exec - Treinamento de modelos de machine learning")

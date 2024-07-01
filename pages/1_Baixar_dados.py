@@ -19,8 +19,8 @@ mpl.rc('font', **font)
 
 # Configurations
 st.set_page_config(
-    page_title="Inteli | Baixar dados para treino de modelos",
-    page_icon="💻",
+    page_title="Inteli | Download de dados",
+    page_icon=Image.open(os.path.join('assets', 'inteli_logo.png')),
     layout="wide",
     menu_items={
         "Get help": "mailto:Alessandro.Gagliardi@br.experian.com",
@@ -29,7 +29,7 @@ st.set_page_config(
 )
 
 if __name__ == '__main__':
-    # banner = Image.open(os.path.join('assets', 'inteli_logo.png'))
+    # banner = Image.open(os.path.join('assets', 'inteli_logo_exec.png'))
     # st.image(banner)
 
     st.write(

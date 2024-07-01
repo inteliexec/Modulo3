@@ -9,12 +9,14 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import StandardScaler
 import plotly.graph_objects as go
+import os
 # import shap
 
 import messages as msn
 import metrics as met
 from models import ModelTypes, AutoWOEEncoder, BetaCalibratedClassifier
 
+from PIL import Image
 
 
 plt.style.use("dark_background")
@@ -25,7 +27,7 @@ mpl.rc('font', **font)
 # Configurations
 st.set_page_config(
     page_title="Inteli | Treinamento de modelos",
-    page_icon="💻",
+    page_icon=Image.open(os.path.join('assets', 'inteli_logo.png')),
     layout="wide",
     menu_items={
         "Get help": "mailto:Alessandro.Gagliardi@br.experian.com",

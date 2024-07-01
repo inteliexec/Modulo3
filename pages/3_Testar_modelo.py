@@ -1,6 +1,18 @@
 import streamlit as st
 import pandas as pd
 import io
+import os
+from PIL import Image
+
+st.set_page_config(
+    page_title="Inteli | Teste de modelos",
+    page_icon=Image.open(os.path.join('assets', 'inteli_logo.png')),
+    layout="wide",
+    menu_items={
+        "Get help": "mailto:Alessandro.Gagliardi@br.experian.com",
+        "About": """Página construída para curso de dados do Inteli (2023)"""
+    }
+)
 
 st.markdown(
                 """
