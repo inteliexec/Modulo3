@@ -12,22 +12,13 @@ import metrics as met
 
 from PIL import Image
 
+from config.config import set_page_config
+set_page_config()
+
 plt.style.use("dark_background")
 mpl.rcParams['figure.dpi'] = 210
 font = {'family': 'Tahoma', 'size': 14}
 mpl.rc('font', **font)
-
-# Configurations
-st.set_page_config(
-    page_title="Inteli | Download de dados",
-    page_icon=Image.open(os.path.join('assets', 'inteli_logo.png')),
-    layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        "Get help": "mailto:Alessandro.Gagliardi@br.experian.com",
-        "About": """Página construída para curso de dados do Inteli (2023)"""
-    }
-)
 
 if __name__ == '__main__':
     # banner = Image.open(os.path.join('assets', 'inteli_logo_exec.png'))

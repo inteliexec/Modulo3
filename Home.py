@@ -2,14 +2,10 @@ import streamlit as st
 from PIL import Image
 import os
 
-st.set_page_config(
-    page_title="Inteli Exec",
-    page_icon=Image.open(os.path.join('assets', 'inteli_logo.png')),
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+from config.config import set_page_config
+set_page_config()
 
-st.image(Image.open(os.path.join('assets', 'inteli_logo_exec.png')))
+st.image(Image.open(os.path.join('assets', 'inteli_exec.png')))
 
 st.write("# Inteli Exec - Treinamento de modelos de machine learning")
 
