@@ -8,6 +8,7 @@ st.set_page_config(
     page_title="Inteli | Teste de modelos",
     page_icon=Image.open(os.path.join('assets', 'inteli_logo.png')),
     layout="wide",
+    initial_sidebar_state="expanded",
     menu_items={
         "Get help": "mailto:Alessandro.Gagliardi@br.experian.com",
         "About": """Página construída para curso de dados do Inteli (2023)"""
