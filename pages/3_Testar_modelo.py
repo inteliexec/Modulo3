@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import io
-import os
-from PIL import Image
 
 from config.config import set_page_config
 set_page_config()
@@ -39,11 +37,11 @@ else:
             X_val = df_val[st.session_state['features']]
             df_pred = X_val.copy()
             df_pred['Prediction'] = model.predict_proba(X_val)[:,1]
+            st.dataframe(df_pred.head(30))
             st.download_button(
                 label="Baixar dados",
                 data=to_excel(df_pred),
                 file_name="base_scorada.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
-            st.dataframe(df_pred.head(30))
+            )   
 
