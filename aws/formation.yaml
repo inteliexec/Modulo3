@@ -1,6 +1,15 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Stack para criar uma VPC, subnet e 15 instâncias EC2 com Docker e rodar um contêiner específico.
 
+Mappings:
+  AWSRegionToAMI:
+    us-east-1:
+      AMI: ami-04a81a99f5ec58529
+    us-east-2:
+      AMI: ami-0862be96e41dcbf74
+    sa-east-1:
+      AMI: ami-080111c1449900431
+
 Resources:
   MyVPC:
     Type: AWS::EC2::VPC
@@ -67,10 +76,19 @@ Resources:
   EC2LaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
-      ImageId: ami-0862be96e41dcbf74  # Ubuntu 24.04 AMI ID (verifique se está disponível na sua região)
+      ImageId: !FindInMap 
+        - AWSRegionToAMI
+        - !Ref "AWS::Region"
+        - AMI
       InstanceType: t2.micro
       SecurityGroups:
         - Ref: MySecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: 20
+            VolumeType: gp2
+            DeleteOnTermination: true
       UserData: 
         Fn::Base64: 
           !Sub |
@@ -84,7 +102,7 @@ Resources:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             sudo docker pull pablorlv/inteli-exec:latest
-            sudo docker run -p 80:8501 pablorlv/inteli-exec
+            sudo docker run -d --restart unless-stopped -p 80:8501 pablorlv/inteli-exec
 
   EC2Instances:
     Type: AWS::AutoScaling::AutoScalingGroup
