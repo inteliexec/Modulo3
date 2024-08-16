@@ -1,6 +1,10 @@
 import streamlit as st
 import pandas as pd
 import io
+import boto3
+
+from config.config import set_page_config
+set_page_config()
 
 st.markdown(
                 """
@@ -20,6 +24,18 @@ def to_excel(df):
             writer.close()
         processed_data = output.getvalue()
         return processed_data
+
+def upload_file_to_s3(df, company_name, file_name):
+    excel_buffer = io.BytesIO()
+    df.to_excel(excel_buffer, index=False, engine='openpyxl')
+    excel_buffer.seek(0)
+    s3_client = boto3.client('s3')
+    s3_client.upload_fileobj(
+        excel_buffer,
+        Bucket='inteli-exec-bucket',
+        Key=f'{company_name}/{file_name}.xlsx'
+    )
+    st.write("O upload do arquivo foi realizado com sucesso!")
     
 if  st.session_state.get('is_fit') is None:
     st.write("Você precisa treinar um modelo antes")
@@ -34,11 +50,11 @@ else:
             X_val = df_val[st.session_state['features']]
             df_pred = X_val.copy()
             df_pred['Prediction'] = model.predict_proba(X_val)[:,1]
-            st.download_button(
-                label="Baixar dados",
-                data=to_excel(df_pred),
-                file_name="base_scorada.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
             st.dataframe(df_pred.head(30))
+            company_name = st.selectbox("Qual o nome da sua empresa?", ["BTG", "Ambev", "Outra"], index=None)
+            file_name = st.text_input("Insira o nome que deseja fornecer ao arquivo", "")
+            if file_name != "" and company_name != None:
+                upload_button = st.button("Realizar upload")
+                if upload_button:
+                    upload_file_to_s3(df_pred, company_name, file_name)
 

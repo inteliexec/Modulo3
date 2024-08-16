@@ -3,35 +3,18 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import StandardScaler
 import plotly.graph_objects as go
+import os
 # import shap
-
 import messages as msn
 import metrics as met
 from models import ModelTypes, AutoWOEEncoder, BetaCalibratedClassifier
-
-
-
-plt.style.use("dark_background")
-mpl.rcParams['figure.dpi'] = 210
-font = {'family': 'Tahoma', 'size': 14}
-mpl.rc('font', **font)
-
-# Configurations
-st.set_page_config(
-    page_title="Inteli | Treinamento de modelos",
-    page_icon="💻",
-    layout="wide",
-    menu_items={
-        "Get help": "mailto:Alessandro.Gagliardi@br.experian.com",
-        "About": """Página construída para curso de dados do Inteli (2023)"""
-    }
-)
+from config.config import set_page_config
+set_page_config()
 
 def get_features_and_target(data):
     X, y = None, None
@@ -39,7 +22,6 @@ def get_features_and_target(data):
         pass
     else:
         col1, col2 = st.columns(2)
-        import os
         st.write("Carregando dados...")
         df = pd.read_excel(data)
         col1.write("Visualização da sua base de dados (30 linhas)")

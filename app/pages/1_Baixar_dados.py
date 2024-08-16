@@ -12,24 +12,16 @@ import metrics as met
 
 from PIL import Image
 
+from config.config import set_page_config
+set_page_config()
+
 plt.style.use("dark_background")
 mpl.rcParams['figure.dpi'] = 210
 font = {'family': 'Tahoma', 'size': 14}
 mpl.rc('font', **font)
 
-# Configurations
-st.set_page_config(
-    page_title="Inteli | Baixar dados para treino de modelos",
-    page_icon="💻",
-    layout="wide",
-    menu_items={
-        "Get help": "mailto:Alessandro.Gagliardi@br.experian.com",
-        "About": """Página construída para curso de dados do Inteli (2023)"""
-    }
-)
-
 if __name__ == '__main__':
-    # banner = Image.open(os.path.join('assets', 'inteli_logo.png'))
+    # banner = Image.open(os.path.join('assets', 'inteli_logo_exec.png'))
     # st.image(banner)
 
     st.write(
@@ -40,11 +32,25 @@ Ambos os arquivos tem as mesmas variáveis, mas somente o de treino contém as m
 Seu objetivo será de estudar as variáveis no treino, construir variáveis novas se achar necessário, e realizar o treinamento. 
 Com isso, poderá obter os scores (probabilidade de inadimplência) para a base de teste.
 """)
-    
-        # import webbrowser
+    # Carregar o arquivo zip
+    zip_path = "zip/Train_test_files_excel.zip"
+
+    # Abrir o arquivo zip em modo binário
+    with open(zip_path, "rb") as f:
+        zip_data = f.read()
+
+    # Botão de download para o arquivo zip
+    st.download_button(
+        label="Baixar dados",
+        data=zip_data,
+        file_name='arquivos.zip',
+        mime='application/zip'
+    )
+
+    # import webbrowser
     # link = "https://www.dropbox.com/scl/fi/uh9k4iwz3snq7yibnl12v/Train_test_files.zip?rlkey=4d9hfqpq6squwrwb156uhlzn1&dl=0"
-    link = "https://www.dropbox.com/scl/fi/i1ys54vmfsqgfhje3vaf6/Train_test_files_excel.zip?rlkey=h7qx8n09c5hbbih605nw98dpo&st=dczvbwjz&dl=0"
-    st.link_button("Baixar dados", link)
+    # link = "https://www.dropbox.com/scl/fi/i1ys54vmfsqgfhje3vaf6/Train_test_files_excel.zip?rlkey=h7qx8n09c5hbbih605nw98dpo&st=dczvbwjz&dl=0"
+    # st.link_button("Baixar dados", link)
 
     # if st.button('Baixar arquivos'):
     #     webbrowser.open_new_tab(link)
