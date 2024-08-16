@@ -10,7 +10,6 @@ from sklearn.preprocessing import StandardScaler
 import plotly.graph_objects as go
 import os
 # import shap
-import messages as msn
 import metrics as met
 from models import ModelTypes, AutoWOEEncoder, BetaCalibratedClassifier
 from config.config import set_page_config
@@ -56,7 +55,15 @@ if __name__ == '__main__':
     #     del st.session_state['test_bytes']
     #     st.experimental_rerun()
 
-    st.write(msn.treino)
+    st.write("""
+                ### Treinamento de modelos
+
+                Quando estiver pronto, faça upload de um arquivo Excel contendo:
+                * Todas as variáveis (features) que alimentarão o modelo -- devem estar obrigatoriamente na **primeira linha do Excel** (linha 1)
+                * A variável `default` deve estar na última coluna, à direita de todas as outras. É ela que o modelo tentará prever.
+
+                O treinamento será feito com modelo de sua escolha, e com divisão aleatória de treino/teste na proporção 70/30.
+            """)
     X_train, X_val = None, None
     df = st.file_uploader("Envie seu arquivo para treino", type=['xlsx'], accept_multiple_files=False)
     X, y = get_features_and_target(df)
