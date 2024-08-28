@@ -3,5 +3,6 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    restart: always
     ports:
       - "80:8501"

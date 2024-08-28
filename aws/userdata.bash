@@ -7,5 +7,6 @@ sudo apt update && sudo apt install -y docker-ce
 sudo usermod -aG docker ${USER}
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-sudo docker pull pablorlv/inteli-exec:latest
-sudo docker run -p 80:8501 pablorlv/inteli-exec
+git clone https://github.com/inteliexec/Modulo3.git
+cd ~/Modulo3
+sudo docker compose up
