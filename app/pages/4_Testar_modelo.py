@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import io
 import boto3
+from urllib import parse
 from config.config import set_page_config
 set_page_config()
 
@@ -16,6 +17,7 @@ def to_excel(df):
         return processed_data
 
 def upload_file_to_s3(df, file_name):
+    tags = {"name": st.session_state['name'], "area": "default"}
     company = st.session_state['company']
     excel_buffer = io.BytesIO()
     df.to_excel(excel_buffer, index=False, engine='openpyxl')
@@ -24,9 +26,10 @@ def upload_file_to_s3(df, file_name):
     s3_client.upload_fileobj(
         excel_buffer,
         Bucket='inteli-exec-dev',
-        Key=f'{company}/{file_name}.xlsx'
+        Key=f'{company}/{file_name}.xlsx',
+        ExtraArgs={"Tagging": parse.urlencode(tags)}
     )
-    st.write("O upload do arquivo foi realizado com sucesso!")
+    st.success('O upload do arquivo foi realizado com sucesso!', icon="✅")
     
 if  st.session_state.get('is_fit') is None:
     st.write("Você precisa treinar um modelo antes")
@@ -42,9 +45,9 @@ else:
             df_pred = X_val.copy()
             df_pred['Prediction'] = model.predict_proba(X_val)[:,1]
             st.dataframe(df_pred.head(30))
-            file_name = st.text_input("Insira o nome que deseja fornecer ao arquivo", "")
+            file_name = st.text_input("Para enviar o resultado do seu modelo para o professor, insira o nome que deseja para o arquivo:", "")
             if file_name != "":
-                upload_button = st.button("Realizar upload")
+                upload_button = st.button("Enviar para o professor")
                 if upload_button:
                     upload_file_to_s3(df_pred, file_name)
 
