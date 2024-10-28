@@ -25,7 +25,7 @@ def upload_file_to_s3(df, file_name):
     s3_client = boto3.client('s3')
     s3_client.upload_fileobj(
         excel_buffer,
-        Bucket='inteli-exec-dev',
+        Bucket='inteli-exec-bucket',
         Key=f'{company}/{file_name}.xlsx',
         ExtraArgs={"Tagging": parse.urlencode(tags)}
     )
