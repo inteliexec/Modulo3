@@ -45,6 +45,12 @@ else:
             df_pred = X_val.copy()
             df_pred['Prediction'] = model.predict_proba(X_val)[:,1]
             st.dataframe(df_pred.head(30))
+            st.download_button(
+                label="Baixar dados",
+                data=to_excel(df_pred),
+                file_name="base_scorada.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
             file_name = st.text_input("Para enviar o resultado do seu modelo para o professor, insira o nome que deseja para o arquivo:", "")
             if file_name != "":
                 upload_button = st.button("Enviar para o professor")
