@@ -85,9 +85,9 @@ if __name__ == '__main__':
                 base_model = LGBMClassifier(n_estimators=300, learning_rate=0.007, reg_alpha=0.5, reg_lambda=0.5,  random_state=123)
                 # model = LGBMClassifier(n_estimators=125, learning_rate=0.08, colsample_bytree=0.9, min_child_weight=1, subsample=0.8)
 
-            # case ModelTypes.KNN:
-            #     from sklearn.neighbors import KNeighborsClassifier
-            #     base_model = KNeighborsClassifier(n_neighbors=300, weights='uniform', n_jobs=3)
+            case ModelTypes.KNN:
+                from sklearn.neighbors import KNeighborsClassifier
+                base_model = KNeighborsClassifier(n_neighbors=300, weights='uniform', n_jobs=3)
 
             case ModelTypes.XGB:
                 from xgboost import XGBClassifier
